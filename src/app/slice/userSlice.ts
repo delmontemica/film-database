@@ -9,7 +9,6 @@ export const userSlice = createSlice({
     name: 'auth',
     initialState: {
         username: '',
-        token: '',
         loading: false,
         success: false,
     } as UserState,

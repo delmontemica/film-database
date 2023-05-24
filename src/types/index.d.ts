@@ -9,7 +9,3 @@ export type Movies = {
 export type Movie = {
     Title: string
 }
-
-export type Search = {
-    keyword: string
-}

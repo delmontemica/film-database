@@ -17,12 +17,3 @@ export const getAxiosClient = () => {
         }
     });
 };
-
-export const getErrorMessage = (error: AxiosError, fields = false) => {
-    const { status, data }: { status?: number, data?: any } = (error.response as AxiosResponse) || {};
-    if (status && status < 500) {
-        return fields ? data.errors : data.message;
-    }
-    if (isDevMode()) console.error(error);
-    return 'Server Error';
-};

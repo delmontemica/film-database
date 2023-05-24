@@ -1,8 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import './App.css';
-import Home from 'pages/Home';
-import MovieDetails from 'pages/MovieDetails';
+import Home from 'pages/home/Home';
+import MovieDetails from 'pages/details/MovieDetails';
 
 function App() {
   return (

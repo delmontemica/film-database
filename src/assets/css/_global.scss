@@ -1,0 +1,12 @@
+@import 'variables';
+
+body {
+    background-color: $dark-bg;
+    color: white;
+    margin: 0px;
+    font-family: $open-sans !important;
+}
+
+.container {
+    padding: 30px 50px;
+}
