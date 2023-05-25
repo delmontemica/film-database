@@ -1,11 +1,6 @@
 @import "src/assets/css/variables";
 
-section {
-    width: 70vw;
-    margin: auto;
-}
-
-.search-container {
+section.search-container {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -50,42 +45,4 @@ section {
 .display-results {
     display: flex;
     flex-wrap: wrap;
-}
-
-.movie-card {
-    border-color: $dark-bg;
-    background: $dark-bg;
-    color: white;
-
-    &-image {
-        height: 100%;
-    }
-
-    .ant-card-cover {
-        width: 200px;
-        height: 290px;
-        padding: 10px;
-        object-fit: cover;
-    }
-
-    .ant-card-meta-title {
-        white-space: break-spaces;
-        font-size: 0.8rem;
-        color: white;
-    }
-
-    .subtitle-container {
-        display: flex;
-        align-items: center;
-    }
-
-    .movie-year {
-        color: #c0c0c0;
-        font-size: 0.8rem;
-        margin: 10px 0;
-    }
-
-    .ant-card-body {
-        padding: 10px;
-    }
 }

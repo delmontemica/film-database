@@ -8,5 +8,10 @@ body {
 }
 
 .container {
+    display: flex;
+    align-content: center;
+    flex-direction: column;
+    width: 70vw;
+    margin: auto;
     padding: 30px 50px;
 }

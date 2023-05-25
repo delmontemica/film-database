@@ -1,94 +1,87 @@
-import React, { useState } from 'react';
-import { Button, Card, Col, Input, Row, Spin } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Col, Input, Pagination, Row, Spin } from 'antd';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { getMoviesBySearch, reset, selectMovies } from 'app/slice/movieSlice';
 import { Movies } from 'types';
 import 'pages/home/Home.scss';
-import Navbar from 'components/header/Navbar';
-import { AiOutlineHeart, AiOutlineSearch } from 'react-icons/ai';
+import { AiOutlineSearch } from 'react-icons/ai';
+import MovieCard from 'components/card/MovieCard';
 
 const { Search } = Input;
-const { Meta } = Card;
 
 const Home = () => {
     const dispatch = useAppDispatch();
-    const { movies, loading, success } = useAppSelector(selectMovies);
-    const [isHovered, setIsHovered] = useState(false);
-    const [hoveredMovieId, setHoveredMovieId] = useState<string>('');
+    const { movies, loading, success, totalResults } = useAppSelector(selectMovies);
+    const [ page, setPage ] = useState(1);
+    const [ keyword, setKeyword ] = useState('');
+
+    useEffect(() => {
+        handleSearchResultFetching();
+    }, [keyword, page]);
+
+    const onChangePage = (page: number) => {
+        setPage(page);
+    }
 
     const onSearch = (value: string) => {
-        dispatch(reset());
-        dispatch(getMoviesBySearch(value));
-    }
-
-    const handleMouseEnter = (movieId: string) => {
-        setIsHovered(true);
-        setHoveredMovieId(movieId)
+        setKeyword(value);
     };
-    const handleMouseLeave = () => {
-        setIsHovered(false);
-        setHoveredMovieId('');
-    }
 
+    const handleSearchResultFetching = () => {
+        dispatch(reset());
+        dispatch(getMoviesBySearch({ keyword: keyword, page: page }));
+    }
 
     return (
-        <>
-            <Navbar />
-            <div className="container">
-                <section className="search-container">
-                    <Search
-                        prefix={<AiOutlineSearch />}
-                        placeholder="Input a keyword or the title of the movie"
-                        allowClear
-                        enterButton="Search"
-                        size="large"
-                        onSearch={onSearch}
+        <div className="container">
+            <section className="search-container">
+                <Search
+                    prefix={<AiOutlineSearch />}
+                    placeholder="Input a keyword or the title of the movie"
+                    allowClear
+                    enterButton="Search"
+                    size="large"
+                    onSearch={onSearch}
+                />
+            </section>
+
+            <section>
+                {success && movies.length !== 0 && (
+                    <h1>Search Results</h1>
+                )}
+
+                {loading ? (
+                    <Spin className="m-auto w-100" />
+                ) : (
+                    <Row gutter={[0, 16]}>
+                        {movies?.map((movie: Movies) => (
+                            <Col flex={2} key={movie.imdbID}>
+                                <MovieCard title={movie.Title}
+                                           id={movie.imdbID}
+                                           year={movie.Year}
+                                           poster={movie.Poster}
+                                />
+                            </Col>
+                        ))}
+                    </Row>
+                )}
+
+                { totalResults > 10 && (
+                    <Pagination
+                        pageSize={10}
+                        current={page}
+                        total={totalResults}
+                        onChange={onChangePage}
+                        showSizeChanger={false}
                     />
-                </section>
+                )}
+            </section>
 
-                <section>
-                    { success && movies.length !== 0 && (
-                        <h1>Search Results</h1>
-                    )}
-
-                    { loading ? (
-                        <Spin className="m-auto w-100" />
-                    ) : (
-                        <Row gutter={[16, 16]}>
-                            { movies?.map((movie: Movies) => (
-                                <Col flex={2} key={movie.imdbID}>
-                                    <Card
-                                        hoverable
-                                        style={{ width: 200 }}
-                                        cover={
-                                            <img
-                                                alt={movie.Title}
-                                                src={movie.Poster}
-                                                className="movie-card-image"
-                                            />
-                                        }
-                                        className="movie-card"
-                                        onMouseEnter={() => handleMouseEnter(movie.imdbID)}
-                                        onMouseLeave={handleMouseLeave}
-                                    >
-                                        <Meta title={movie.Title} />
-                                        <div className="movie-year">{movie.Year}</div>
-                                        {isHovered && hoveredMovieId === movie.imdbID && <Button type="primary" size="small" block danger icon={<AiOutlineHeart />}>
-                                            Add to Favorites
-                                        </Button>}
-                                    </Card>
-                                </Col>
-                            ))}
-                        </Row>
-                    )}
-                </section>
-
-                <section>
-                    <h1>Recently Added to Favorites</h1>
-                </section>
-            </div>
-        </>
-    )
-}
+            <section>
+                <h1>Recently Added to Favorites</h1>
+            </section>
+        </div>
+    );
+};
 
 export default Home;

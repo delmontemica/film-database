@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from 'app/store';
-import { Movie, Movies } from 'types';
+import { Movie, Movies, SearchRequest } from 'types';
 import { fetchMoviesByID, fetchMoviesBySearch } from 'api/movie';
 
 type MovieState = {
@@ -8,8 +8,10 @@ type MovieState = {
     selectedMovie: Movie,
     message?: string,
     loading: boolean,
-    success: boolean | null
+    success: boolean | null,
+    totalResults: number
 }
+
 
 /**
  * GET Movies based on given keywords.
@@ -17,9 +19,9 @@ type MovieState = {
  */
 export const getMoviesBySearch = createAsyncThunk(
     '/search',
-    async(keyword: string, { dispatch, rejectWithValue }) => {
+    async(data: SearchRequest, { dispatch, rejectWithValue }) => {
         try {
-            let response = await fetchMoviesBySearch(keyword);
+            let response = await fetchMoviesBySearch(data);
 
             if (response.data.Response === 'True') {
                 dispatch(setMoviesList(response.data));
@@ -61,7 +63,8 @@ export const movieSlice = createSlice({
         selectedMovie: {},
         message: '',
         loading: false,
-        success: null
+        success: null,
+        totalResults: 0
     } as MovieState,
     reducers: {
         reset: (state: MovieState) => {
@@ -69,10 +72,12 @@ export const movieSlice = createSlice({
             state.message = '';
             state.loading = false;
             state.success = null;
+            state.totalResults = 0;
         },
         setMoviesList: (state, action) => {
-            const { Search } = action.payload;
+            const { Search, totalResults } = action.payload;
             state.movies = Search;
+            state.totalResults = totalResults;
         },
         setMovie: (state, action) => {
             state.selectedMovie = action.payload;
