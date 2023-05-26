@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from 'app/store';
-import { Movie, Movies, SearchRequest } from 'types';
+import { Movie, Movies, SearchParams } from 'types';
 import { fetchMoviesByID, fetchMoviesBySearch } from 'api/movie';
 
 type MovieState = {
@@ -19,7 +19,7 @@ type MovieState = {
  */
 export const getMoviesBySearch = createAsyncThunk(
     '/search',
-    async(data: SearchRequest, { dispatch, rejectWithValue }) => {
+    async(data: SearchParams, { dispatch, rejectWithValue }) => {
         try {
             let response = await fetchMoviesBySearch(data);
 

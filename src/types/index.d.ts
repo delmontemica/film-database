@@ -10,7 +10,7 @@ export type Movie = {
     Title: string
 }
 
-export type SearchRequest = {
+export type SearchParams = {
     keyword: string,
     page: number
 }

@@ -1,27 +1,34 @@
 import React from 'react';
 import { Button, Card, ConfigProvider } from 'antd';
-import { AiOutlineHeart } from 'react-icons/ai';
-import './MovieCard.scss';
+import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
+import './index.scss';
+import { Movies } from 'types';
 
 const { Meta } = Card;
 
 type Props = {
-    title: string,
-    poster?: string,
-    id: string,
-    year: string,
-    saveAsFavorite: () => void
+    movie: Movies
+    saveAsFavorite?: () => void,
+    favoritesList?: Movies[]
 }
 
 const MovieCard = (props: Props) => {
-    const { title, poster, year, saveAsFavorite } = props;
+    const { movie, saveAsFavorite, favoritesList } = props;
+
+    const setFavoriteIcon = () => {
+        if (favoritesList?.includes(movie)) {
+            return <AiFillHeart />;
+        }
+        return <AiOutlineHeart />;
+    }
 
     return (
         <ConfigProvider>
             <Button
                 type="primary"
                 shape="circle"
-                danger icon={<AiOutlineHeart />}
+                danger
+                icon={setFavoriteIcon()}
                 className="favorite-button"
                 onClick={saveAsFavorite}
             />
@@ -30,14 +37,14 @@ const MovieCard = (props: Props) => {
                 cover={
                     <div className="movie-card-image-container">
                         <img
-                            alt={title}
-                            src={poster}
+                            alt={movie.Title}
+                            src={movie.Poster}
                         />
                     </div>
                 }
                 className="movie-card"
             >
-                <Meta title={title} description={year} />
+                <Meta title={movie.Title} description={movie.Year} />
             </Card>
         </ConfigProvider>
     )

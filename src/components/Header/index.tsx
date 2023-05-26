@@ -1,6 +1,6 @@
 import React from 'react';
 import { Layout, Button } from 'antd';
-import './Navbar.css';
+import './index.scss';
 import { AiFillVideoCamera, AiOutlineHeart } from 'react-icons/ai';
 const { Header } = Layout;
 

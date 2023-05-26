@@ -7,7 +7,7 @@ const MovieDetails = () => {
     const params = useParams();
     const dispatch = useAppDispatch();
 
-    const { selectedMovie, loading, success } = useAppSelector(selectMovies);
+    const { selectedMovie } = useAppSelector(selectMovies);
 
     useEffect(() => {
         dispatch(reset());
