@@ -53,9 +53,9 @@ const Home = () => {
                 {loading ? (
                     <Spin className="m-auto w-100" />
                 ) : (
-                    <Row gutter={[0, 16]}>
+                    <Row gutter={[0, 16]} justify="start">
                         {movies?.map((movie: Movies) => (
-                            <Col flex={2} key={movie.imdbID}>
+                            <Col key={movie.imdbID}>
                                 <MovieCard title={movie.Title}
                                            id={movie.imdbID}
                                            year={movie.Year}
@@ -68,6 +68,7 @@ const Home = () => {
 
                 { totalResults > 10 && (
                     <Pagination
+                        className="mt-4 mb-4"
                         pageSize={10}
                         current={page}
                         total={totalResults}

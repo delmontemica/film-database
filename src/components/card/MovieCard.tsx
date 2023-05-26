@@ -15,9 +15,20 @@ type Props = {
 const MovieCard = (props: Props) => {
     const { title, poster, id, year } = props;
 
+    const saveAsFavorite = () => {
+        localStorage.setItem('id', id);
+        const saved = sessionStorage.getItem('key');
+    }
+
     return (
         <ConfigProvider>
-            <Button type="primary" shape="circle" danger icon={<AiOutlineHeart />} className="favorite-button" />
+            <Button
+                type="primary"
+                shape="circle"
+                danger icon={<AiOutlineHeart />}
+                className="favorite-button"
+                onClick={saveAsFavorite}
+            />
             <Card
                 hoverable
                 cover={
