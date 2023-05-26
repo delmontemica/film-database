@@ -24,14 +24,17 @@ const MovieCard = (props: Props) => {
 
     return (
         <ConfigProvider>
-            <Button
-                type="primary"
-                shape="circle"
-                danger
-                icon={setFavoriteIcon()}
-                className="favorite-button"
-                onClick={saveAsFavorite}
-            />
+            {saveAsFavorite && (
+                <Button
+                    type="primary"
+                    shape="circle"
+                    danger
+                    icon={setFavoriteIcon()}
+                    className="favorite-button"
+                    onClick={saveAsFavorite}
+                />
+            )}
+
             <Card
                 hoverable
                 cover={

@@ -6,7 +6,8 @@ import { useAppDispatch, useAppSelector } from 'app/hooks';
 import {
     getMoviesBySearch,
     reset,
-    selectMovies
+    selectMovies,
+    setFavoriteMoviesList
 } from 'app/slice/movieSlice';
 
 type Props = {
@@ -19,6 +20,10 @@ const SearchResults = (props: Props) => {
     const [ favoriteMovies, setFavoritesMovies ] = useState<Movies[]>([]);
     const [ page, setPage ] = useState(1);
     const { movies, loading, success, totalResults } = useAppSelector(selectMovies);
+
+    useEffect(() => {
+        dispatch(setFavoriteMoviesList(favoriteMovies));
+    }, [favoriteMovies]);
 
     useEffect(() => {
         // Fetch existing list of favorites from localStorage

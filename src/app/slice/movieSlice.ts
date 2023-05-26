@@ -9,7 +9,8 @@ type MovieState = {
     message?: string,
     loading: boolean,
     success: boolean | null,
-    totalResults: number
+    totalResults: number,
+    favoriteMovies: Movies[],
 }
 
 
@@ -64,7 +65,8 @@ export const movieSlice = createSlice({
         message: '',
         loading: false,
         success: null,
-        totalResults: 0
+        totalResults: 0,
+        favoriteMovies: [] as Movies[]
     } as MovieState,
     reducers: {
         reset: (state: MovieState) => {
@@ -81,6 +83,9 @@ export const movieSlice = createSlice({
         },
         setMovie: (state, action) => {
             state.selectedMovie = action.payload;
+        },
+        setFavoriteMoviesList: (state, action) => {
+            state.favoriteMovies = action.payload;
         }
     },
     extraReducers: (builder) => {
@@ -105,4 +110,4 @@ export const movieSlice = createSlice({
 });
 
 export const selectMovies = (state: RootState) => state.movie;
-export const { reset, setMoviesList, setMovie } = movieSlice.actions;
+export const { reset, setMoviesList, setMovie, setFavoriteMoviesList } = movieSlice.actions;
