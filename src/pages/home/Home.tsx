@@ -32,6 +32,27 @@ const Home = () => {
         dispatch(getMoviesBySearch({ keyword: keyword, page: page }));
     }
 
+    const handleSavingAsFavorite = (id: string) => {
+        // Fetch existing list of favorites from localStorage
+        const storedFavoriteIdsJson: string | null = localStorage.getItem('favorites');
+        let storedFavoriteIds: string[] = storedFavoriteIdsJson ? JSON.parse(storedFavoriteIdsJson) : [];
+
+        // Check if selected ID already exists in current favorites
+        if (!storedFavoriteIds.includes(id)) {
+            // If selected ID doesn't exist, add to favorites.
+            storedFavoriteIds.push(id);
+        } else {
+            // If selected ID already exists, remove from favorites.
+            storedFavoriteIds = storedFavoriteIds.filter(existingId => existingId !== id);
+        }
+
+        // Convert new list to string for storing to localStorage
+        const updatedFavoriteIdsJson: string = JSON.stringify(storedFavoriteIds);
+
+        // Update localStorage
+        localStorage.setItem('favorites', updatedFavoriteIdsJson);
+    }
+
     return (
         <div className="container">
             <section className="search-container">
@@ -60,6 +81,7 @@ const Home = () => {
                                            id={movie.imdbID}
                                            year={movie.Year}
                                            poster={movie.Poster}
+                                           saveAsFavorite={() => handleSavingAsFavorite(movie.imdbID)}
                                 />
                             </Col>
                         ))}

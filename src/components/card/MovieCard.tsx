@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button, Card, ConfigProvider } from 'antd';
 import { AiOutlineHeart } from 'react-icons/ai';
 import './MovieCard.scss';
@@ -9,16 +9,12 @@ type Props = {
     title: string,
     poster?: string,
     id: string,
-    year: string
+    year: string,
+    saveAsFavorite: () => void
 }
 
 const MovieCard = (props: Props) => {
-    const { title, poster, id, year } = props;
-
-    const saveAsFavorite = () => {
-        localStorage.setItem('id', id);
-        const saved = sessionStorage.getItem('key');
-    }
+    const { title, poster, year, saveAsFavorite } = props;
 
     return (
         <ConfigProvider>
