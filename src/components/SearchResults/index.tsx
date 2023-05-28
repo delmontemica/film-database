@@ -23,7 +23,7 @@ const SearchResults = (props: Props) => {
 
     useEffect(() => {
         dispatch(setFavoriteMoviesList(favoriteMovies));
-    }, [favoriteMovies]);
+    }, [dispatch, favoriteMovies]);
 
     useEffect(() => {
         // Fetch existing list of favorites from localStorage
@@ -59,6 +59,8 @@ const SearchResults = (props: Props) => {
 
         // Update localStorage
         localStorage.setItem('favoriteMovies', updatedFavoriteMoviesJson);
+
+        updatedFavoriteMovies.reverse();
         setFavoritesMovies(updatedFavoriteMovies);
     }
 
@@ -81,7 +83,6 @@ const SearchResults = (props: Props) => {
                         <Col key={movie.imdbID}>
                             <MovieCard movie={movie}
                                        saveAsFavorite={() => handleSavingAsFavorite(movie)}
-                                       favoritesList={favoriteMovies}
                             />
                         </Col>
                     ))}

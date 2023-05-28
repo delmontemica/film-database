@@ -3,20 +3,22 @@ import { Button, Card, ConfigProvider } from 'antd';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import './index.scss';
 import { Movies } from 'types';
+import { useAppSelector } from 'app/hooks';
+import { selectMovies } from 'app/slice/movieSlice';
 
 const { Meta } = Card;
 
 type Props = {
     movie: Movies
-    saveAsFavorite?: () => void,
-    favoritesList?: Movies[]
+    saveAsFavorite?: () => void
 }
 
 const MovieCard = (props: Props) => {
-    const { movie, saveAsFavorite, favoritesList } = props;
+    const { favoriteMovies, movies } = useAppSelector(selectMovies);
+    const { movie, saveAsFavorite } = props;
 
     const setFavoriteIcon = () => {
-        if (favoritesList?.includes(movie)) {
+        if (favoriteMovies?.includes(movie)) {
             return <AiFillHeart />;
         }
         return <AiOutlineHeart />;
