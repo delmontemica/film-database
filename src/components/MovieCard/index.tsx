@@ -5,6 +5,7 @@ import './index.scss';
 import { Movies } from 'types';
 import { useAppSelector } from 'app/hooks';
 import { selectMovies } from 'app/slice/movieSlice';
+import { Link } from 'react-router-dom';
 
 const { Meta } = Card;
 
@@ -17,6 +18,8 @@ const MovieCard = (props: Props) => {
     const { favoriteMovies, movies } = useAppSelector(selectMovies);
     const { movie, saveAsFavorite } = props;
 
+    // TODO: Check if array of favorites exists in the array of movies in fetch result.
+    // If movie in fetch result is marked as favorite, icon should be filled.
     const setFavoriteIcon = () => {
         if (favoriteMovies?.includes(movie)) {
             return <AiFillHeart />;
@@ -37,20 +40,22 @@ const MovieCard = (props: Props) => {
                 />
             )}
 
-            <Card
-                hoverable
-                cover={
-                    <div className="movie-card-image-container">
-                        <img
-                            alt={movie.Title}
-                            src={movie.Poster}
-                        />
-                    </div>
-                }
-                className="movie-card"
-            >
-                <Meta title={movie.Title} description={movie.Year} />
-            </Card>
+            <Link to={`/movies/${movie.imdbID}`}>
+                <Card
+                    hoverable
+                    cover={
+                        <div className="movie-card-image-container">
+                            <img
+                                alt={movie.Title}
+                                src={movie.Poster}
+                            />
+                        </div>
+                    }
+                    className="movie-card"
+                >
+                    <Meta title={movie.Title} description={movie.Year} />
+                </Card>
+            </Link>
         </ConfigProvider>
     )
 }

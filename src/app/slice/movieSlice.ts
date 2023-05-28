@@ -71,6 +71,7 @@ export const movieSlice = createSlice({
     reducers: {
         reset: (state: MovieState) => {
             state.movies = [];
+            state.selectedMovie = {};
             state.message = '';
             state.loading = false;
             state.success = null;

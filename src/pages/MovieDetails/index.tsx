@@ -15,6 +15,7 @@ const MovieDetails = () => {
     }, [dispatch, params])
 
     return (
+        // TODO: Display design.
         <div>Title: {selectedMovie.Title}</div>
     )
 };

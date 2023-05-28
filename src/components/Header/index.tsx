@@ -10,6 +10,8 @@ const Navbar = () => {
             <AiFillVideoCamera className="logo" color="#8d1eb2" />
             <div className="logo">Film<span style={{ color: '#8d1eb2' }}>DB</span></div>
             <div className="header-subtitle">Your Source for Movie Information and Recommendations</div>
+
+            {/*TODO: Add URL to favorites page.*/}
             <Button type="primary" shape="circle" icon={<AiOutlineHeart />} className="header-button" danger />
         </Header>
     )
