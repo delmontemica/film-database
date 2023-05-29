@@ -7,7 +7,7 @@ import {
     getMoviesBySearch,
     reset,
     selectMovies,
-    setFavoriteMoviesList
+    handleUpdateFavoriteMovies
 } from 'app/slice/movieSlice';
 
 type Props = {
@@ -17,21 +17,8 @@ type Props = {
 const SearchResults = (props: Props) => {
     const dispatch = useAppDispatch();
     const { keyword } = props;
-    const [ favoriteMovies, setFavoritesMovies ] = useState<Movies[]>([]);
     const [ page, setPage ] = useState(1);
     const { movies, loading, success, totalResults } = useAppSelector(selectMovies);
-
-    useEffect(() => {
-        dispatch(setFavoriteMoviesList(favoriteMovies));
-    }, [dispatch, favoriteMovies]);
-
-    useEffect(() => {
-        // Fetch existing list of favorites from localStorage
-        const storedFavoriteMoviesJson: string | null = localStorage.getItem('favoriteMovies');
-        let storedFavoriteMovies: Movies[] = storedFavoriteMoviesJson ? JSON.parse(storedFavoriteMoviesJson) : [];
-
-        setFavoritesMovies(storedFavoriteMovies);
-    }, []);
 
     // Handle fetching and updating of data each time there's a change in dependencies
     useEffect(() => {
@@ -44,24 +31,7 @@ const SearchResults = (props: Props) => {
     }
 
     const handleSavingAsFavorite = (movie: Movies) => {
-        let updatedFavoriteMovies: Movies[] = [...favoriteMovies];
-
-        if (!favoriteMovies.includes(movie)) {
-            // If selected ID doesn't exist, add to favorites.
-            updatedFavoriteMovies.push(movie);
-        } else {
-            // If selected ID already exists, remove from favorites.
-            updatedFavoriteMovies = favoriteMovies.filter(existingMovie => existingMovie !== movie);
-        }
-
-        // Convert new list to string for storing to localStorage
-        const updatedFavoriteMoviesJson: string = JSON.stringify(updatedFavoriteMovies);
-
-        // Update localStorage
-        localStorage.setItem('favoriteMovies', updatedFavoriteMoviesJson);
-
-        updatedFavoriteMovies.reverse();
-        setFavoritesMovies(updatedFavoriteMovies);
+        dispatch(handleUpdateFavoriteMovies(movie));
     }
 
     // Set current page value

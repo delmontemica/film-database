@@ -85,8 +85,29 @@ export const movieSlice = createSlice({
         setMovie: (state, action) => {
             state.selectedMovie = action.payload;
         },
-        setFavoriteMoviesList: (state, action) => {
-            state.favoriteMovies = action.payload;
+        handleUpdateFavoriteMovies: (state, action) => {
+            const movieData = action.payload;
+
+            const storedFavoriteMoviesJson: string | null = localStorage.getItem('favoriteMovies');
+            let storedFavoriteMovies: Movies[] = storedFavoriteMoviesJson ? JSON.parse(storedFavoriteMoviesJson) : [];
+            let updatedFavoriteMovies: Movies[] = [...storedFavoriteMovies];
+
+            if (!storedFavoriteMovies.some(existingMovie => existingMovie.imdbID === movieData.imdbID)) {
+                // If selected movie doesn't exist, add to favorites.
+                updatedFavoriteMovies.push(movieData);
+            } else {
+                // If selected movie already exists, remove from favorites.
+                updatedFavoriteMovies = storedFavoriteMovies.filter(existingMovie => existingMovie.imdbID !== movieData.imdbID);
+            }
+
+            // Convert new list to string for storing to localStorage
+            const updatedFavoriteMoviesJson: string = JSON.stringify(updatedFavoriteMovies);
+
+            // Update localStorage
+            localStorage.setItem('favoriteMovies', updatedFavoriteMoviesJson);
+            updatedFavoriteMovies.reverse();
+
+            state.favoriteMovies = updatedFavoriteMovies;
         }
     },
     extraReducers: (builder) => {
@@ -111,4 +132,4 @@ export const movieSlice = createSlice({
 });
 
 export const selectMovies = (state: RootState) => state.movie;
-export const { reset, setMoviesList, setMovie, setFavoriteMoviesList } = movieSlice.actions;
+export const { reset, setMoviesList, setMovie, handleUpdateFavoriteMovies } = movieSlice.actions;

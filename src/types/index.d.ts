@@ -20,7 +20,9 @@ export type Movie = {
     Runtime?: string,
     Title?: string,
     Writer?: string,
-    Year?: string
+    Year?: string,
+    imdbID?: string,
+    Type?: string
 }
 
 export type SearchParams = {
