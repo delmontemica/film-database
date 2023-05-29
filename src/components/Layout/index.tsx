@@ -8,13 +8,13 @@ const { Content } = Layout;
 const Default = () => {
     return (
         <ConfigProvider
-                theme={{
-                    algorithm: theme.darkAlgorithm,
-                    token: {
-                        colorBgLayout: '#202124',
-                    }
-                }}
-            >
+            theme={{
+                algorithm: theme.darkAlgorithm,
+                token: {
+                    colorBgLayout: '#202124',
+                }
+            }}
+        >
             <Layout>
                 <Navbar />
                 <Content>
@@ -22,7 +22,7 @@ const Default = () => {
                 </Content>
             </Layout>
         </ConfigProvider>
-    )
-}
+    );
+};
 
 export default Default;

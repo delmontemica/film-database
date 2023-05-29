@@ -23,39 +23,39 @@ const MovieCard = (props: Props) => {
             return <AiFillHeart />;
         }
         return <AiOutlineHeart />;
-    }
+    };
 
     return (
         <ConfigProvider>
-            {saveAsFavorite && (
+            { saveAsFavorite && (
                 <Button
                     type="primary"
                     shape="circle"
                     danger
-                    icon={setFavoriteIcon()}
+                    icon={ setFavoriteIcon() }
                     className="favorite-button"
-                    onClick={saveAsFavorite}
+                    onClick={ saveAsFavorite }
                 />
-            )}
+            ) }
 
-            <Link to={`/movies/${movie.imdbID}`}>
+            <Link to={ `/movies/${ movie.imdbID }` }>
                 <Card
                     hoverable
                     cover={
                         <div className="movie-card-image-container">
                             <img
-                                alt={movie.Title}
-                                src={movie.Poster}
+                                alt={ movie.Title }
+                                src={ movie.Poster }
                             />
                         </div>
                     }
                     className="movie-card"
                 >
-                    <Meta title={movie.Title} description={movie.Year} />
+                    <Meta title={ movie.Title } description={ movie.Year } />
                 </Card>
             </Link>
         </ConfigProvider>
-    )
-}
+    );
+};
 
 export default MovieCard;

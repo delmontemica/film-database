@@ -6,7 +6,7 @@ const Favorites = () => {
         <div className="container">
             <RecentFavorites />
         </div>
-    )
-}
+    );
+};
 
 export default Favorites;

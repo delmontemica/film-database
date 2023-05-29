@@ -23,7 +23,7 @@ const MovieDetails = () => {
     useEffect(() => {
         dispatch(resetMovieDetails());
         dispatch(getMoviesByID(params.movieId ?? ''));
-    }, [dispatch, params])
+    }, [dispatch, params]);
 
     const movieDetails = {
         Directors: selectedMovie?.Director,
@@ -32,7 +32,7 @@ const MovieDetails = () => {
         Language: selectedMovie?.Language,
         Country: selectedMovie?.Country,
         Awards: selectedMovie?.Awards
-    }
+    };
 
     const movie: Movies = {
         Title: selectedMovie.Title ?? '',
@@ -40,62 +40,69 @@ const MovieDetails = () => {
         imdbID: selectedMovie.imdbID ?? '',
         Type: selectedMovie.Type ?? '',
         Poster: selectedMovie.Poster ?? ''
-    }
+    };
 
     const handleSavingAsFavorite = (movie: Movies) => {
         dispatch(handleUpdateFavoriteMovies(movie));
-    }
+    };
 
     const isMovieFavorite = () => {
         return !favoriteMovies.some(existingMovie => existingMovie.imdbID === selectedMovie.imdbID);
 
-    }
+    };
 
     return (
         <section className="mx-auto mt-4 movie-details-container">
             <Button
                 className="mb-4"
-                icon={<AiFillCaretLeft />}
-                onClick={() => navigate(-1)}
+                icon={ <AiFillCaretLeft /> }
+                onClick={ () => navigate(-1) }
             >
                 Go back
             </Button>
             <Card>
-                <Row gutter={[16, 24]}>
-                    <Col md={6} sm={24}>
+                <Row gutter={ [16, 24] }>
+                    <Col md={ 6 } sm={ 24 }>
                         <div className="justify-content-center d-flex">
-                            <Image className="movie-details-poster" src={selectedMovie?.Poster} />
+                            <Image className="movie-details-poster"
+                                   src={ selectedMovie?.Poster } />
                         </div>
                     </Col>
-                    <Col md={18} sm={24}>
+                    <Col md={ 18 } sm={ 24 }>
                         <div className="movie-details-title">
-                            <Typography.Title level={2} className="m-0">{selectedMovie?.Title}</Typography.Title>
+                            <Typography.Title level={ 2 }
+                                              className="m-0">{ selectedMovie?.Title }</Typography.Title>
                             <Button
                                 className="mt-2"
-                                icon={isMovieFavorite() ? <AiOutlineHeart /> : <AiFillHeart />}
+                                icon={ isMovieFavorite() ? <AiOutlineHeart /> :
+                                    <AiFillHeart /> }
                                 danger
-                                onClick={() => handleSavingAsFavorite(movie)}
+                                onClick={ () => handleSavingAsFavorite(movie) }
                             >
-                                {isMovieFavorite() ? 'Add to Favorites' : 'Remove from Favorites'}
+                                { isMovieFavorite() ? 'Add to Favorites' : 'Remove from Favorites' }
                             </Button>
                         </div>
-                        <Typography.Title level={5} className="m-0">{selectedMovie?.Year}</Typography.Title>
-                        <div className="">{selectedMovie?.Rated} • {selectedMovie?.Runtime} • {selectedMovie?.Genre} • {selectedMovie?.Released}</div>
-                        <Typography.Title level={4}>Overview</Typography.Title>
-                        <Paragraph>{selectedMovie?.Plot}</Paragraph>
+                        <Typography.Title level={ 5 }
+                                          className="m-0">{ selectedMovie?.Year }</Typography.Title>
+                        <div
+                            className="">{ selectedMovie?.Rated } • { selectedMovie?.Runtime } • { selectedMovie?.Genre } • { selectedMovie?.Released }</div>
+                        <Typography.Title
+                            level={ 4 }>Overview</Typography.Title>
+                        <Paragraph>{ selectedMovie?.Plot }</Paragraph>
 
                         <Row>
-                            {Object.entries(movieDetails)?.map(([key, value]) => (
-                                <Col sm={24} md={12} key={key}>
-                                    <span className="movie-details-label">{key}</span> {value}
+                            { Object.entries(movieDetails)?.map(([key, value]) => (
+                                <Col sm={ 24 } md={ 12 } key={ key }>
+                                    <span
+                                        className="movie-details-label">{ key }</span> { value }
                                 </Col>
-                            ))}
+                            )) }
                         </Row>
                     </Col>
                 </Row>
             </Card>
         </section>
-    )
+    );
 };
 
 export default MovieDetails;

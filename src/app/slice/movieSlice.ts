@@ -10,9 +10,10 @@ type MovieState = {
     loading: boolean,
     success: boolean | null,
     totalResults: number,
-    favoriteMovies: Movies[]
+    favoriteMovies: Movies[],
+    page: number,
+    keyword: string
 }
-
 
 /**
  * GET Movies based on given keywords.
@@ -20,7 +21,7 @@ type MovieState = {
  */
 export const getMoviesBySearch = createAsyncThunk(
     '/search',
-    async(data: SearchParams, { dispatch, rejectWithValue }) => {
+    async (data: SearchParams, { dispatch, rejectWithValue }) => {
         try {
             let response = await fetchMoviesBySearch(data);
 
@@ -33,7 +34,7 @@ export const getMoviesBySearch = createAsyncThunk(
             return rejectWithValue(error.response.status);
         }
     }
-)
+);
 
 /**
  * GET Movie based on specified ID.
@@ -41,7 +42,7 @@ export const getMoviesBySearch = createAsyncThunk(
  */
 export const getMoviesByID = createAsyncThunk(
     '/search/movie',
-    async(id: string, { dispatch, rejectWithValue }) => {
+    async (id: string, { dispatch, rejectWithValue }) => {
         try {
             let response = await fetchMoviesByID(id);
 
@@ -53,7 +54,7 @@ export const getMoviesByID = createAsyncThunk(
             return rejectWithValue(error.response.status);
         }
     }
-)
+);
 
 export const movieSlice = createSlice({
     name: 'movie',
@@ -64,7 +65,9 @@ export const movieSlice = createSlice({
         loading: false,
         success: null,
         totalResults: 0,
-        favoriteMovies: [] as Movies[]
+        favoriteMovies: [] as Movies[],
+        page: 1,
+        keyword: ''
     } as MovieState,
     reducers: {
         reset: (state: MovieState) => {
@@ -73,6 +76,8 @@ export const movieSlice = createSlice({
             state.loading = false;
             state.success = null;
             state.totalResults = 0;
+            state.page = 1;
+            state.keyword = '';
         },
         resetMovieDetails: (state: MovieState) => {
             state.selectedMovie = {};
@@ -107,7 +112,13 @@ export const movieSlice = createSlice({
             localStorage.setItem('favoriteMovies', updatedFavoriteMoviesJson);
 
             state.favoriteMovies = updatedFavoriteMovies;
-        }
+        },
+        setPage: (state, action) => {
+            state.page = action.payload;
+        },
+        setKeyword: (state, action) => {
+            state.keyword = action.payload;
+        },
     },
     extraReducers: (builder) => {
         // getMoviesBySearch action pending
@@ -131,4 +142,12 @@ export const movieSlice = createSlice({
 });
 
 export const selectMovies = (state: RootState) => state.movie;
-export const { reset, resetMovieDetails, setMoviesList, setMovie, handleUpdateFavoriteMovies } = movieSlice.actions;
+export const {
+    reset,
+    resetMovieDetails,
+    setMoviesList,
+    setMovie,
+    handleUpdateFavoriteMovies,
+    setKeyword,
+    setPage
+} = movieSlice.actions;
