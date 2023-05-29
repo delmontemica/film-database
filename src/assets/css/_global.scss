@@ -15,3 +15,11 @@ body {
     margin: auto;
     padding: 30px 50px;
 }
+
+/* CSS for small screens (up to 576 pixels) */
+@media (max-width: 576px) {
+    .container {
+        width: 100vw;
+        padding: 20px;
+    }
+}

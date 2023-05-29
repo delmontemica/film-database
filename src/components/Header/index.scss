@@ -5,19 +5,52 @@
     display: flex;
     align-items: center;
     background-color: #1a1a1a;
+
+    &-text {
+        display: flex;
+        flex-direction: row;
+    }
+
+    &-button {
+        margin-left: auto;
+    }
+
+    &-subtitle {
+        margin-left: 2rem;
+        font-size: 0.7rem;
+    }
+
+    &-logo {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &-text {
+            font-family: 'Alata', sans-serif;
+            font-size: 2rem;
+            margin-right: 0.2rem;
+        }
+    }
 }
 
-.logo {
-    font-family: 'Alata', sans-serif;
-    font-size: 2rem;
-    margin-right: 0.2rem;
-}
+/* CSS for small screens (up to 576 pixels) */
+@media (max-width: 576px) {
+    .header {
+        height: 80px;
 
-.header-subtitle {
-    margin-left: 2rem;
-    font-size: 0.7rem;
-}
+        &-text {
+            flex-direction: column;
+        }
 
-.header-button {
-    margin-left: auto;
+        &-logo {
+            display: flex;
+            justify-content: flex-start;
+            height: 30px;
+        }
+
+        &-subtitle {
+            margin-left: 0;
+            line-height: normal;
+        }
+    }
 }

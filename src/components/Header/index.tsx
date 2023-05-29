@@ -10,9 +10,14 @@ const Navbar = () => {
 
     return (
         <Header className="header">
-            <AiFillVideoCamera className="logo" color="#8d1eb2" />
-            <div className="logo">Film<span style={{ color: '#8d1eb2' }}>DB</span></div>
-            <div className="header-subtitle">Your Source for Movie Information and Recommendations</div>
+            <div className="header-text">
+                <div className="header-logo">
+                    <AiFillVideoCamera className="header-logo-text" color="#8d1eb2" />
+                    <div className="header-logo-text">Film<span style={{ color: '#8d1eb2' }}>DB</span></div>
+                </div>
+
+                <div className="header-subtitle">Your Source for Movie Information and Recommendations</div>
+            </div>
             <Button
                 type="primary"
                 shape="circle"

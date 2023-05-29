@@ -10,7 +10,7 @@ type MovieState = {
     loading: boolean,
     success: boolean | null,
     totalResults: number,
-    favoriteMovies: Movies[],
+    favoriteMovies: Movies[]
 }
 
 
@@ -44,11 +44,9 @@ export const getMoviesByID = createAsyncThunk(
     async(id: string, { dispatch, rejectWithValue }) => {
         try {
             let response = await fetchMoviesByID(id);
-            console.log(response);
 
             if (response.data.Response === 'True') {
                 dispatch(setMovie(response.data));
-                console.log(response.data);
                 return response.data;
             }
         } catch (error: Error | any) {
@@ -71,11 +69,13 @@ export const movieSlice = createSlice({
     reducers: {
         reset: (state: MovieState) => {
             state.movies = [];
-            state.selectedMovie = {};
             state.message = '';
             state.loading = false;
             state.success = null;
             state.totalResults = 0;
+        },
+        resetMovieDetails: (state: MovieState) => {
+            state.selectedMovie = {};
         },
         setMoviesList: (state, action) => {
             const { Search, totalResults } = action.payload;
@@ -94,7 +94,7 @@ export const movieSlice = createSlice({
 
             if (!storedFavoriteMovies.some(existingMovie => existingMovie.imdbID === movieData.imdbID)) {
                 // If selected movie doesn't exist, add to favorites.
-                updatedFavoriteMovies.push(movieData);
+                updatedFavoriteMovies.unshift(movieData);
             } else {
                 // If selected movie already exists, remove from favorites.
                 updatedFavoriteMovies = storedFavoriteMovies.filter(existingMovie => existingMovie.imdbID !== movieData.imdbID);
@@ -105,7 +105,6 @@ export const movieSlice = createSlice({
 
             // Update localStorage
             localStorage.setItem('favoriteMovies', updatedFavoriteMoviesJson);
-            updatedFavoriteMovies.reverse();
 
             state.favoriteMovies = updatedFavoriteMovies;
         }
@@ -132,4 +131,4 @@ export const movieSlice = createSlice({
 });
 
 export const selectMovies = (state: RootState) => state.movie;
-export const { reset, setMoviesList, setMovie, handleUpdateFavoriteMovies } = movieSlice.actions;
+export const { reset, resetMovieDetails, setMoviesList, setMovie, handleUpdateFavoriteMovies } = movieSlice.actions;

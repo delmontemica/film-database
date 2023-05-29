@@ -15,11 +15,11 @@ type Props = {
 }
 
 const MovieCard = (props: Props) => {
-    const { favoriteMovies, movies } = useAppSelector(selectMovies);
+    const { favoriteMovies } = useAppSelector(selectMovies);
     const { movie, saveAsFavorite } = props;
 
     const setFavoriteIcon = () => {
-        if (favoriteMovies?.includes(movie)) {
+        if (favoriteMovies.some(existingMovie => existingMovie.imdbID === movie.imdbID)) {
             return <AiFillHeart />;
         }
         return <AiOutlineHeart />;

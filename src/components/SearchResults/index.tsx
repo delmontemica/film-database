@@ -26,7 +26,6 @@ const SearchResults = (props: Props) => {
     }, [keyword, page]);
 
     const handleSearchResultFetching = () => {
-        dispatch(reset());
         dispatch(getMoviesBySearch({ keyword: keyword, page: page }));
     }
 
@@ -37,6 +36,7 @@ const SearchResults = (props: Props) => {
     // Set current page value
     const onChangePage = (page: number) => {
         setPage(page);
+        dispatch(reset());
     }
 
     return (

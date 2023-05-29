@@ -1,7 +1,12 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
-import { getMoviesByID, handleUpdateFavoriteMovies, reset, selectMovies } from 'app/slice/movieSlice';
+import {
+    getMoviesByID,
+    handleUpdateFavoriteMovies,
+    resetMovieDetails,
+    selectMovies
+} from 'app/slice/movieSlice';
 import { Button, Card, Col, Image, Row, Typography } from 'antd';
 import './index.scss';
 import { AiFillCaretLeft, AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
@@ -16,7 +21,7 @@ const MovieDetails = () => {
     const { selectedMovie, favoriteMovies } = useAppSelector(selectMovies);
 
     useEffect(() => {
-        dispatch(reset());
+        dispatch(resetMovieDetails());
         dispatch(getMoviesByID(params.movieId ?? ''));
     }, [dispatch, params])
 
@@ -57,14 +62,14 @@ const MovieDetails = () => {
             </Button>
             <Card>
                 <Row gutter={[16, 24]}>
-                    <Col span={6}>
+                    <Col md={6} sm={24}>
                         <div className="justify-content-center d-flex">
-                            <Image width={230} src={selectedMovie?.Poster} />
+                            <Image className="movie-details-poster" src={selectedMovie?.Poster} />
                         </div>
                     </Col>
-                    <Col span={18}>
-                        <div className="d-flex flex-row justify-content-between">
-                            <Typography.Title level={1} className="m-0">{selectedMovie?.Title}</Typography.Title>
+                    <Col md={18} sm={24}>
+                        <div className="movie-details-title">
+                            <Typography.Title level={2} className="m-0">{selectedMovie?.Title}</Typography.Title>
                             <Button
                                 className="mt-2"
                                 icon={isMovieFavorite() ? <AiOutlineHeart /> : <AiFillHeart />}
@@ -81,7 +86,7 @@ const MovieDetails = () => {
 
                         <Row>
                             {Object.entries(movieDetails)?.map(([key, value]) => (
-                                <Col span={12} key={key}>
+                                <Col sm={24} md={12} key={key}>
                                     <span className="movie-details-label">{key}</span> {value}
                                 </Col>
                             ))}
