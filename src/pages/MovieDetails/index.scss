@@ -1,0 +1,14 @@
+.movie-details {
+    &-container {
+        width: 70%;
+    }
+
+    &-poster {
+        margin: auto;
+    }
+
+    &-label {
+        font-weight: bold;
+        margin-right: 10px;
+    }
+}

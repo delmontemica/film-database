@@ -12,8 +12,6 @@ const RecentFavorites = () => {
         <section>
             <h1>Recently Added to Favorites</h1>
 
-            {/*TODO: If recent favorites are in homepage, limit display to 10.*/}
-            {/*TODO: If recent favorites are displayed on separate page, display all.*/}
             <Row gutter={[0, 16]} justify="start">
                 {favoriteMovies?.map((movie: Movies) => (
                     <Col key={movie.imdbID}>

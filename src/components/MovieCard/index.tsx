@@ -18,8 +18,6 @@ const MovieCard = (props: Props) => {
     const { favoriteMovies, movies } = useAppSelector(selectMovies);
     const { movie, saveAsFavorite } = props;
 
-    // TODO: Check if array of favorites exists in the array of movies in fetch result.
-    // If movie in fetch result is marked as favorite, icon should be filled.
     const setFavoriteIcon = () => {
         if (favoriteMovies?.includes(movie)) {
             return <AiFillHeart />;
